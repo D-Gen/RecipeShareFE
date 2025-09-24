@@ -1,0 +1,86 @@
+@import url(../public/fonts/Inter/inter.css);
+@import "primeicons/primeicons.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+}
+@supports (font-variation-settings: normal) {
+  :root { font-family: InterVariable, sans-serif; }
+}
+
+*{
+  box-sizing: border-box;
+}
+
+html,body {
+  height: 100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Poppins', sans-serif;
+}
+
+h1{
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 48px;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+
+p,sub {
+  font-family: 'Inter', sans-serif;
+  line-height: 16px;
+}
+
+.space {
+  margin-top: 24px;
+}
+.space-bottom {
+  margin-bottom: 24px;
+}
+
+body {
+  margin: 0;
+}
+
+.mainPadding{
+  padding-left: 34px;
+  padding-right: 34px;
+}
+.mainPadding-tb {
+  padding-top: 42px;
+  padding-bottom: 42px;
+}
+
+.mainPadding-outer {
+  /*padding: 18px 39px 49px;*/
+}
+
+.inner {
+  background-color: #F4F7FB;
+  padding: 0.5rem
+}
+
+.title {
+  font-family: Poppins, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 21px;
+}
+

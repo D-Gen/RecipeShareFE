@@ -1,0 +1,119 @@
+<main class="mainPadding overflow-hidden">
+  <div class="flex flex-col md:flex-row">
+    <div class="w-full flex flex-col items-center justify-center">
+      <div class="w-10/12">
+        <div class="flex flex-col w-full">
+          <a routerLink="/">
+            <img ngSrc="Logo.svg"
+                 width="168"
+                 height="41"
+                 class="h-full object-cover"
+                 alt="Logo"
+            />
+          </a>
+          <h1 class="space">Share new Recipe</h1>
+          <sub class="space">
+            Please enter everything relating to the recipe you would like to share below
+          </sub>
+        </div>
+        <form [formGroup]="addRecipeForm"
+              (ngSubmit)="submitRequest()"
+              class="w-full flex flex-col items-center justify-center gap-3"
+        >
+          <div class="flex flex-col gap-2 w-full space">
+            <label for="title">Title</label>
+            <input pInputText id="title" type="text" formControlName="title" placeholder="Recipe name"/>
+            <p-message variant="simple"
+                       severity="error"
+                       size="small"
+                       *ngIf="title?.dirty && title?.hasError('required')"
+            >
+              Field is required
+            </p-message>
+          </div>
+
+          <div class="flex flex-col w-full">
+            <label for="ingredients">Ingredients</label>
+            <input pInputText id="ingredients" type="text" formControlName="ingredients" placeholder="Ingredients"/>
+            <p-message
+              variant="simple"
+              severity="error"
+              size="small"
+              *ngIf="ingredients?.dirty
+                    && ingredients?.hasError('required')"
+            >
+              Field is required
+            </p-message>
+          </div>
+
+          <div class="flex flex-col w-full">
+            <label for="steps">Steps</label>
+            <textarea pTextarea rows="8" id="steps" formControlName="steps"
+                      placeholder="Cooking steps...Elaborate on what is required to make the ingredients work"></textarea>
+            <p-message
+              variant="simple"
+              severity="error"
+              size="small"
+              *ngIf="steps?.dirty
+                    && steps?.hasError('required')"
+            >
+              Field is required
+            </p-message>
+          </div>
+
+          <div class="flex flex-col w-full">
+            <label for="cookingTime">Cooking Time (In Minutes)</label>
+            <input pInputText id="cookingTime" type="number" formControlName="cookingTime" placeholder="15"/>
+
+            <p-message
+              variant="simple"
+              severity="error"
+              size="small"
+              *ngIf="cookingTime?.dirty
+                    && cookingTime?.hasError('required')"
+            >
+              Field is required
+            </p-message>
+            <p-message
+              variant="simple"
+              severity="error"
+              size="small"
+              *ngIf="cookingTime?.dirty
+                     && !cookingTime?.hasError('required')
+                     && cookingTime?.hasError('min')"
+            >
+              Cooking time must be greater then zero
+            </p-message>
+          </div>
+
+          <div class="flex flex-col w-full">
+            <label for="ingredients">Tags</label>
+            <input pInputText id="tags" type="text" formControlName="steps" placeholder="French, Sweet"/>
+            <p-message
+              variant="simple"
+              severity="error"
+              size="small"
+              *ngIf="steps?.dirty
+                    && steps?.hasError('required')"
+            >
+              Field is required
+            </p-message>
+          </div>
+
+          <div class="flex flex-col gap-2 w-full" style="margin-top: 10px">
+            <p-message class="ms-1" *ngIf="requestError" severity="error">{{requestError}}</p-message>
+            <p-button label="Share Recipe" type="submit" class="w-full" styleClass="w-full mx-auto" />
+          </div>
+          <div class="flex flex-col w-full">
+            <p-button routerLink="/"
+                      label="Back to Home"
+                      severity="secondary"
+                      class="w-full border-gray-600"
+                      styleClass="w-full mx-auto !border-gray-300"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
