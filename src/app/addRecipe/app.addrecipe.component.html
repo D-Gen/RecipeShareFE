@@ -88,13 +88,13 @@
 
           <div class="flex flex-col w-full">
             <label for="ingredients">Tags</label>
-            <input pInputText id="tags" type="text" formControlName="steps" placeholder="French, Sweet"/>
+            <input pInputText id="tags" type="text" formControlName="tags" placeholder="French, Sweet"/>
             <p-message
               variant="simple"
               severity="error"
               size="small"
-              *ngIf="steps?.dirty
-                    && steps?.hasError('required')"
+              *ngIf="tags?.dirty
+                    && tags?.hasError('required')"
             >
               Field is required
             </p-message>
@@ -117,3 +117,4 @@
     </div>
   </div>
 </main>
+<p-toast />

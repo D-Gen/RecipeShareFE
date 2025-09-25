@@ -14,34 +14,64 @@
       <sub>
         All shared Recipes
       </sub>
+      <form [formGroup]="searchRecipeForm"
+            (ngSubmit)="submitSearch()">
+        <div class="flex flex-col gap-2 w-full space mb-4">
+          <label for="searchWord">Search Recipe</label>
+          <input pInputText id="searchWord" type="text" formControlName="searchWord" placeholder="Search"/>
+          <p-message variant="simple"
+                     severity="error"
+                     size="small"
+                     *ngIf="searchWord?.dirty && searchWord?.hasError('required')"
+          >
+            Field is required
+          </p-message>
+          <p-button
+                    label="Search"
+                    severity="primary"
+                    variant="outlined"
+                    class="w-full border-gray-600"
+                    styleClass=" mx-auto !border-gray-300"
+                    type="submit"
+          />
+        </div>
+      </form>
       <div *ngIf="recipes().length > 0">
-        <p-timeline [value]="recipes()" align="align" styleClass="">
-          <ng-template #marker let-recipe>
-            <span class="flex w-8 h-8 items-center justify-center text-white rounded-full z-10 shadow-sm bg-amber-500" [style]="{}">
-                <i></i>
-            </span>
-          </ng-template>
-          <ng-template #content let-recipe>
-            <p-card [header]="recipe.title" [subheader]="recipe.tags">
-              <div class="flex">
-                <p class="flex-grow">
-                  Cooking time: <br> {{recipe.cookingTime}}
-                  Ingredients: <br> {{recipe.ingredients}}
-                  <br>
-                  <br>
-                  Cooking steps: <br> {{recipe.steps}}
-                </p>
+        <p-dataView #dv [value]="recipes()" align="align" styleClass="">
+          <ng-template #list let-items>
+            <div class="grid gap-4 grid-nogutter">
+              <p-card *ngFor="let recipe of items " [header]="recipe.title" [subheader]="recipe.tags">
+                <div class="grid grid-cols-3 gap-2">
+                  <p class="col-span-2">
+                    <b>Cooking time:</b> {{recipe.cookingTime}}
+                    <br>
+                    <br>
+                    <b>Ingredients:</b> <br> {{recipe.ingredients}}
+                    <br>
+                    <br>
+                   <b> Cooking steps:</b>
+                    <br>
+                    <br>
+                    <textarea pTextarea
+                              rows="8"
+                              class="w-full inline-block"
+                              readonly
+                              style="text-align: left"
+                    >{{recipe.steps}}</textarea>
+                  </p>
 
-                <div class="">
-                  <p-button label="Update Recipe" severity="warn" (onClick)="updateRecipePage(recipe.id)"
-                  />
-                  <p-button label="Delete Recipe" severity="danger" (onClick)="deleteRecipeDialog(recipe)"
-                  />
+                  <div class="grid grid-cols-2 col-span-1">
+                    <p-button label="Update Recipe" severity="warn" (onClick)="updateRecipePage(recipe.id)"
+                    />
+
+                    <p-button label="Delete Recipe" severity="danger" (onClick)="deleteRecipeDialog(recipe)"
+                    />
+                  </div>
                 </div>
-              </div>
-            </p-card>
+              </p-card>
+            </div>
           </ng-template>
-        </p-timeline>
+        </p-dataView>
       </div>
       <div *ngIf="recipes().length <= 0">
         <p class="text-center py-5 ">The are currently no recipes to show</p>
@@ -61,3 +91,4 @@
     </div>
   </p-dialog>
 </div>
+<p-toast />

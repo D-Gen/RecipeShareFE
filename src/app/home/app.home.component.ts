@@ -11,6 +11,12 @@ import {Dialog} from 'primeng/dialog';
 import {ToasterUtility} from '../../utility/ToasterUtility';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {Router} from '@angular/router';
+import {Toast} from 'primeng/toast';
+import {DataView} from 'primeng/dataview';
+import {Textarea} from 'primeng/textarea';
+import {InputText} from 'primeng/inputtext';
+import {Message} from 'primeng/message';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   templateUrl: './app.home.component.html',
@@ -19,13 +25,18 @@ import {Router} from '@angular/router';
   imports: [
     HeaderComponent,
     NavComponent,
-    // DataView,
+    DataView,
     Card,
     Button,
     Dialog,
     CommonModule,
     TimelineModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    Toast,
+    Textarea,
+    InputText,
+    Message,
+    ReactiveFormsModule
   ],
   providers: [MessageService, Dialog]
 })
@@ -44,6 +55,28 @@ export class HomePage {
    this.loadRecipes()
   }
 
+  searchRecipeForm = new FormGroup({
+    searchWord: new FormControl('',[Validators.required]),
+  });
+
+  get searchWord() {
+    return this.searchRecipeForm.get('searchWord');
+  }
+
+  submitSearch(){
+    this.searchWord?.markAsDirty()
+
+    this.webServerService.searchRecipes(this.searchWord?.value ?? "").subscribe(
+      value => {
+        this.recipes.set(value);
+      },
+      error => {
+        console.log(error);
+        ToasterUtility.showError(this.messageService, "Search failed" ,"Failed to get search results")
+      },
+    )
+  }
+
   private loadRecipes() {
     this.isLoading = true;
     this.webServerService.getAllRecipes().subscribe(
@@ -59,6 +92,7 @@ export class HomePage {
   }
 
   updateRecipePage(recipeId : string) {
+    console.log("updating recipe page: ", recipeId);
     this.router.navigate(['/update-recipe', recipeId]);
   }
 
